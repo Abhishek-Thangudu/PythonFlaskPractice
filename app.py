@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -8,7 +9,14 @@ from resources.store import Store, StoreList
 from db import db
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db' # at the root, and instead of sqlite, it can be mysql, postgresql!!
+
+db_url = os.environ.get('DATABASE_URL')
+if db_url:
+    db_url.replace('postgres', 'postgresql')
+else:
+    db_url = 'sqlite:///data.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #turns off the Flask's sqlalchemy tracker
 app.secret_key = 'jose'
 api = Api(app)
