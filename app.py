@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 db_url = os.environ.get('DATABASE_URL')
 if db_url:
-    db_url.replace('postgres', 'postgresql')
+    db_url = db_url.replace('postgres', 'postgresql')
 else:
     db_url = 'sqlite:///data.db'
 
