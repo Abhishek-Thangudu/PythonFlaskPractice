@@ -13,6 +13,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #turns off the Flask's sqla
 app.secret_key = 'jose'
 api = Api(app)
 
+db.init_app(app)
+
 @app.before_first_request
 def create_tables():
     db.create_all()
@@ -26,5 +28,4 @@ api.add_resource(UserRegister, '/register')
 api.add_resource(StoreList, '/stores')
 
 if __name__ == '__main__':
-    db.init_app(app)
     app.run(port=5000, debug=True)
